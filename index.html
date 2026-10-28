@@ -1,0 +1,465 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Холодмодель — расчёт абсорбционных холодильных машин</title><meta name="description" content="Инженерное программное обеспечение для расчёта абсорбционных холодильных машин, анализа режимов и параметров рабочих потоков."><style>body{margin:0}</style></head><body><!-- Скопируйте весь файл в HTML-блок Битрикс24. -->
+<style>
+#ahm-site{--ink:#10233d;--muted:#53657b;--accent:#007e90;--line:#d9e4ec;--pale:#eef3f7;font:16px/1.55 Arial,Helvetica,sans-serif;color:var(--ink);background:#fff;text-align:left;width:100%;overflow-wrap:anywhere}
+#ahm-site,#ahm-site *{box-sizing:border-box}
+#ahm-site h1,#ahm-site h2,#ahm-site h3,#ahm-site p{margin:0}
+#ahm-site a{color:inherit;text-decoration:none}
+#ahm-site svg{display:block;max-width:100%;height:auto}
+#ahm-site .ahm-wrap{width:min(1180px,100% - 64px);margin-inline:auto}
+#ahm-site .ahm-header{display:flex;align-items:center;justify-content:space-between;gap:28px;padding-block:22px}
+#ahm-site .ahm-brand{display:flex;align-items:center;gap:13px;flex-shrink:0}
+#ahm-site .ahm-mark{width:44px;flex-shrink:0}
+#ahm-site .ahm-brand strong{display:block;font-size:18px;line-height:1.3}
+#ahm-site .ahm-brand small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+#ahm-site .ahm-nav{display:flex;align-items:center;gap:30px;font-size:14px;font-weight:600}
+#ahm-site a.ahm-button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:13px 23px;background:var(--accent);color:white;border:1px solid var(--accent);border-radius:3px;font-weight:700;font-size:14px;transition:background .15s}
+#ahm-site a.ahm-button:hover{background:#006576}
+#ahm-site a:focus-visible{outline:3px solid #ca9227;outline-offset:5px}
+#ahm-site .ahm-nav>a:not(.ahm-button):hover,#ahm-site .ahm-textlink:hover{text-decoration:underline;text-underline-offset:5px}
+#ahm-site .ahm-support{background:var(--pale)}
+#ahm-site .ahm-support-inner{display:grid;grid-template-columns:160px 1fr;align-items:center;gap:16px;padding-block:24px}
+#ahm-site .ahm-logo-slot{display:flex;align-items:center;justify-content:center;min-height:74px;border:1px solid var(--line);background:#e5ecf2;color:var(--muted);font-size:12px;padding:12px;text-align:center}
+#ahm-site .ahm-support p{font-size:12px;line-height:1.5;color:var(--muted);border-left:1px solid #b9cdd9;padding-left:25px;margin-left:10px}
+#ahm-site .ahm-hero{display:grid;grid-template-columns:.95fr 1.05fr;gap:64px;align-items:center;padding-block:58px 48px}
+#ahm-site .ahm-art{padding:10px 0}
+#ahm-site .ahm-art-caption{font-size:12px;letter-spacing:2px;color:#667e98;text-align:center;margin-top:22px}
+#ahm-site .ahm-eyebrow{display:block;font-size:11px;font-weight:700;letter-spacing:1.7px;text-transform:uppercase;color:var(--muted);margin-bottom:22px}
+#ahm-site .ahm-eyebrow:after{content:"";display:block;width:48px;height:1px;background:var(--accent);margin-top:12px}
+#ahm-site h1{font-size:clamp(32px,3.5vw,48px);line-height:1.08;letter-spacing:-1.6px;font-weight:700}
+#ahm-site .ahm-intro{font-size:18px;line-height:1.5;color:var(--muted);margin-top:23px}
+#ahm-site .ahm-actions{display:flex;align-items:center;flex-wrap:wrap;gap:22px;margin-top:26px}
+#ahm-site .ahm-textlink{color:var(--accent);font-size:14px;border-bottom:1px solid #87b9c0;padding-block:8px}
+#ahm-site .ahm-product-band{border-top:1px solid var(--line)}
+#ahm-site .ahm-product{display:grid;grid-template-columns:.8fr 1.2fr;gap:46px;align-items:center;padding-block:36px}
+#ahm-site h2{font-size:30px;line-height:1.17;letter-spacing:-.8px}
+#ahm-site .ahm-description{color:var(--muted);margin-top:15px;font-size:15px}
+#ahm-site .ahm-steps{list-style:none;margin:24px 0 0;padding:0;counter-reset:ahm-step}
+#ahm-site .ahm-steps li{display:flex;align-items:center;gap:25px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;counter-increment:ahm-step}
+#ahm-site .ahm-steps li:last-child{border:0}
+#ahm-site .ahm-steps li:before{content:"0" counter(ahm-step);color:#68afbd;font-size:28px;font-weight:700;line-height:1}
+#ahm-site .ahm-screen{aspect-ratio:16/9;background:linear-gradient(135deg,#f3f6f9,#e7eef4);border:1px solid #c6d6e2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;min-width:0}
+#ahm-site .ahm-screen svg{width:57px;color:#8a9eb4;margin-bottom:20px}
+#ahm-site .ahm-screen strong{font-size:14px;color:#63788e}
+#ahm-site .ahm-screen span{font-size:13px;color:#7b8ca0;margin-top:6px}
+#ahm-site .ahm-screen img{display:block;width:100%;height:auto;object-fit:contain}
+#ahm-site .ahm-features{padding-block:27px 40px;border-top:1px solid var(--line)}
+#ahm-site .ahm-feature-grid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:28px}
+#ahm-site .ahm-feature{display:flex;gap:22px;padding:0 28px;border-left:1px solid var(--line)}
+#ahm-site .ahm-feature:first-child{border:0;padding-left:0}
+#ahm-site .ahm-feature:last-child{padding-right:0}
+#ahm-site .ahm-feature svg{width:40px;min-width:40px;align-self:flex-start;color:var(--accent)}
+#ahm-site h3{font-size:16px;line-height:1.35}
+#ahm-site .ahm-feature p{font-size:14px;line-height:1.5;color:var(--muted);margin-top:9px}
+#ahm-site .ahm-contact-band{background:var(--pale)}
+#ahm-site .ahm-contact{display:grid;grid-template-columns:.8fr 1.2fr;gap:54px;padding-block:36px}
+#ahm-site .ahm-contact-copy{padding-block:12px}
+#ahm-site .ahm-contact-copy>p{color:var(--muted);margin-top:20px}
+#ahm-site .ahm-note{font-size:13px}
+#ahm-site .ahm-contact-slots{margin-top:28px}
+#ahm-site .ahm-contact-slots h3{font-size:14px;margin-bottom:14px}
+#ahm-site .ahm-contact-row{display:flex;align-items:center;gap:15px;margin-top:16px;font-size:14px}
+#ahm-site .ahm-contact-row svg{width:22px;color:var(--accent)}
+#ahm-site .ahm-contact-row span{min-width:60px}
+#ahm-site .ahm-blank{width:150px;height:7px;border-radius:6px;background:#cfdbe5}
+#ahm-site .ahm-form-shell{background:#fff;border:1px solid #e4ebf1;border-radius:4px;padding:32px;min-width:0;display:flex}
+#ahm-site .ahm-form-slot{width:100%;min-width:0}
+#ahm-site .ahm-form-placeholder{min-height:345px;height:100%;border:1px dashed #bacdd9;background:#fbfcfd;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center}
+#ahm-site .ahm-form-placeholder svg{width:44px;color:var(--accent);margin-bottom:22px}
+#ahm-site .ahm-form-placeholder h3{font-size:23px}
+#ahm-site .ahm-form-placeholder p{max-width:330px;color:var(--muted);font-size:14px;margin-top:12px}
+#ahm-site .ahm-form-placeholder small{display:block;font-size:12px;color:#718399;margin-top:22px}
+#ahm-site .ahm-form-slot iframe{width:100%;max-width:100%;border:0;display:block}
+#ahm-site .ahm-footer{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-block:24px}
+#ahm-site .ahm-footer-note{font-size:12px;color:var(--muted)}
+#ahm-site [id]{scroll-margin-top:24px}
+@media(max-width:1000px){
+#ahm-site .ahm-header{flex-wrap:wrap}
+#ahm-site .ahm-nav{justify-content:space-between;width:100%;gap:16px}
+#ahm-site .ahm-hero{gap:30px}
+#ahm-site .ahm-support-inner{grid-template-columns:135px 1fr}
+#ahm-site .ahm-product,#ahm-site .ahm-contact{gap:28px}
+#ahm-site .ahm-feature{gap:14px;padding-inline:18px}
+}
+@media(max-width:700px){
+#ahm-site .ahm-wrap{width:calc(100% - 36px)}
+#ahm-site .ahm-header{padding-block:18px;gap:20px}
+#ahm-site .ahm-nav{flex-wrap:wrap;justify-content:flex-start;column-gap:22px;row-gap:15px;font-size:13px}
+#ahm-site .ahm-nav .ahm-button{width:100%}
+#ahm-site .ahm-support-inner{grid-template-columns:1fr;gap:12px;padding-block:18px}
+#ahm-site .ahm-logo-slot{min-height:58px}
+#ahm-site .ahm-support p{grid-column:1/-1;border:0;margin:0;padding:2px 0 0;font-size:11px}
+#ahm-site .ahm-hero{grid-template-columns:1fr;gap:24px;padding-block:30px}
+#ahm-site .ahm-art{max-width:310px;margin:auto;order:2}
+#ahm-site .ahm-art-caption{font-size:10px;letter-spacing:1.4px;margin-top:6px}
+#ahm-site h1{font-size:36px;letter-spacing:-1px}
+#ahm-site h2{font-size:27px}
+#ahm-site .ahm-intro{font-size:16px}
+#ahm-site .ahm-actions{gap:14px}
+#ahm-site .ahm-product,#ahm-site .ahm-contact{grid-template-columns:1fr;gap:26px;padding-block:28px}
+#ahm-site .ahm-feature-grid{grid-template-columns:1fr;gap:22px}
+#ahm-site .ahm-feature,#ahm-site .ahm-feature:first-child,#ahm-site .ahm-feature:last-child{padding:0 0 20px;border:0;border-bottom:1px solid var(--line)}
+#ahm-site .ahm-feature:last-child{border:0;padding-bottom:0}
+#ahm-site .ahm-features{padding-block:25px}
+#ahm-site .ahm-form-shell{padding:16px}
+#ahm-site .ahm-form-placeholder{padding:24px 16px;min-height:300px}
+#ahm-site .ahm-footer{align-items:flex-start;flex-direction:column}
+}
+
+#ahm-site .ahm-gallery{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:30px;padding-top:8px}
+#ahm-site .ahm-shot{margin:0;min-width:0}
+#ahm-site .ahm-shot figcaption{padding-top:18px;display:grid;grid-template-columns:36px 1fr;gap:12px}
+#ahm-site .ahm-shot-number{font-size:23px;font-weight:700;color:#68afbd;line-height:1.2}
+#ahm-site .ahm-shot figcaption p{margin-top:7px;font-size:14px;color:var(--muted)}
+#ahm-site .ahm-shot-main figcaption{padding-top:14px}
+#ahm-site .ahm-screen:has(>img){padding:0;background:#fff}
+@media(max-width:700px){#ahm-site .ahm-gallery{grid-template-columns:1fr;gap:28px;padding-top:0}}
+
+#ahm-site .ahm-screen[role="button"]{cursor:zoom-in;position:relative}
+#ahm-site .ahm-screen[role="button"]:after{content:"Увеличить ↗";position:absolute;bottom:12px;right:12px;padding:7px 12px;border-radius:3px;background:#10233de8;color:white;font-size:12px;pointer-events:none}
+#ahm-site .ahm-screen[role="button"]:focus-visible{outline:3px solid #ca9227;outline-offset:4px}
+#ahm-site .ahm-lightbox{padding:0;border:1px solid #476075;border-radius:6px;width:calc(100vw - 32px);max-width:1600px;height:calc(100dvh - 32px);max-height:1100px;background:#10233d;color:white;overflow:hidden}
+#ahm-site .ahm-lightbox::backdrop{background:rgba(5,15,28,.88)}
+#ahm-site .ahm-lightbox[open]{display:flex;flex-direction:column}
+#ahm-site .ahm-lightbox-bar{display:flex;align-items:center;gap:14px;padding:12px 18px;flex-shrink:0;border-bottom:1px solid #476075}
+#ahm-site .ahm-lightbox-title{flex:1;font-size:14px;min-width:0}
+#ahm-site .ahm-lightbox button{font:inherit;cursor:pointer;border:1px solid #718399;background:transparent;color:white;border-radius:3px;min-height:44px;padding:8px 14px;flex-shrink:0}
+#ahm-site .ahm-lightbox button:hover{background:#29415d}
+#ahm-site .ahm-lightbox button:focus-visible{outline:3px solid #f0c55c;outline-offset:2px}
+#ahm-site .ahm-lightbox-close{font-size:26px!important;line-height:1}
+#ahm-site .ahm-lightbox-view{flex:1;min-height:0;overflow:auto;display:flex;padding:16px;overscroll-behavior:contain}
+#ahm-site .ahm-lightbox-image{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;margin:auto;cursor:zoom-in;flex-shrink:0}
+#ahm-site .ahm-lightbox-view.is-zoomed{display:block}
+#ahm-site .ahm-lightbox-view.is-zoomed .ahm-lightbox-image{width:var(--ahm-image-width);max-width:none;max-height:none;cursor:zoom-out;margin:0 auto}
+@media(max-width:700px){#ahm-site .ahm-lightbox-bar{flex-wrap:wrap;padding:10px;gap:8px}#ahm-site .ahm-lightbox-title{font-size:12px}#ahm-site .ahm-lightbox button{font-size:12px;padding:8px}#ahm-site .ahm-lightbox-view{padding:8px}}
+
+/* Блоки видимы по умолчанию, даже если JavaScript недоступен. */
+@media(prefers-reduced-motion:no-preference){
+  #ahm-site .ahm-reveal-pending{opacity:0;transform:translateY(24px);transition:none!important}
+  #ahm-site .ahm-reveal-active{transition:opacity 1s ease,transform 1s cubic-bezier(.22,.61,.36,1);transition-delay:var(--ahm-reveal-delay,0ms)}
+}
+
+#ahm-site .ahm-hero{position:relative;min-height:calc(100svh - var(--ahm-top-height,220px));padding-bottom:110px}
+#ahm-site .ahm-scroll-cue{position:absolute;bottom:23px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:9px;color:var(--accent);font-size:12px;letter-spacing:.4px;white-space:nowrap;padding:8px 18px}
+#ahm-site .ahm-scroll-cue svg{width:25px;height:25px;transition:transform .2s}
+#ahm-site .ahm-scroll-cue:hover svg{transform:translateY(4px)}
+@media(prefers-reduced-motion:reduce){#ahm-site .ahm-scroll-cue svg{transition:none}}
+
+#ahm-site .ahm-header{position:sticky;top:0;z-index:100;width:100%;padding-inline:max(32px,calc((100% - 1180px)/2));background:rgba(255,255,255,.98);box-shadow:0 1px 0 #d9e4ec}
+#ahm-site [id]{scroll-margin-top:calc(var(--ahm-header-height,90px) + 20px)}
+#ahm-site .ahm-scroll-cue{transition:opacity .25s ease,visibility .25s ease}
+#ahm-site .ahm-scroll-cue.is-hidden{opacity:0;visibility:hidden;pointer-events:none}
+@media(max-width:700px){#ahm-site .ahm-header{padding-inline:18px;gap:12px;padding-block:12px}#ahm-site .ahm-nav{gap:10px 18px}#ahm-site .ahm-nav .ahm-button{width:auto;min-height:38px;padding:8px 12px}}
+@media(prefers-reduced-motion:reduce){#ahm-site .ahm-scroll-cue{transition:none}}
+
+#ahm-site .ahm-nav>a:not(.ahm-button){position:relative;transition:color .2s ease}
+#ahm-site .ahm-nav>a:not(.ahm-button)::after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:2px;background:var(--accent);transform:scaleX(0);transition:transform .2s ease}
+#ahm-site .ahm-nav>a[aria-current="location"]:not(.ahm-button){color:var(--accent)}
+#ahm-site .ahm-nav>a[aria-current="location"]:not(.ahm-button)::after{transform:scaleX(1)}
+#ahm-site .ahm-nav>a.ahm-button[aria-current="location"]{background:#005b69;border-color:#005b69;box-shadow:0 0 0 3px #b9e1e6}
+@media(prefers-reduced-motion:reduce){#ahm-site .ahm-nav>a:not(.ahm-button),#ahm-site .ahm-nav>a:not(.ahm-button)::after{transition:none}}
+
+/* Нейтральная рамка для встроенной формы; внутренние цвета задаются в Яндекс Формах. */
+#ahm-site .ahm-form-shell{padding:20px;background:#fff;border:1px solid #d9e4ec;border-top:3px solid #007e90;border-radius:6px;box-shadow:0 8px 28px rgba(16,35,61,.04)}
+#ahm-site .ahm-form-slot iframe{background:#fff;border-radius:3px}
+@media(max-width:700px){#ahm-site .ahm-form-shell{padding:8px}}
+
+#ahm-site .ahm-fasie{background:transparent;border:0;padding:0}
+#ahm-site .ahm-fasie img{display:block;width:160px;max-width:100%;height:auto}
+#ahm-site .ahm-screen:has(>img){aspect-ratio:16/9;overflow:hidden;background:#f3f6f9}
+#ahm-site .ahm-screen>img{width:100%;height:100%;object-fit:contain;min-height:0}
+
+</style>
+<div id="ahm-site" lang="ru">
+<header class="ahm-header ahm-wrap">
+<a class="ahm-brand" href="#ahm-home" aria-label="На главную">
+<svg class="ahm-mark" viewBox="0 0 48 52" aria-hidden="true"><path fill="#007e90" d="M24 1 44 13 43 38 24 51 4 39 4 15Z"/><path fill="#16536a" d="m24 1 5 30 14 7 1-25Z"/><path fill="#fff" d="m24 1-9 12-7 25 21-7 14 7-12-14ZM8 38l16 13 5-20Z"/><path fill="#65afbb" d="m4 15 11-2L24 1 7 8Z"/></svg>
+<span><strong>Холодмодель</strong><small>Инженерное программное обеспечение</small></span>
+</a>
+<nav class="ahm-nav" aria-label="Основная навигация">
+<a href="#ahm-solution">Решение</a><a href="#ahm-capabilities">Возможности</a><a href="#ahm-about">О компании</a><a class="ahm-button" href="#ahm-request">Обсудить задачу</a>
+</nav>
+</header>
+<div class="ahm-support">
+<div class="ahm-support-inner ahm-wrap">
+<!-- Замените заглушки официальными логотипами, загруженными в Битрикс24. -->
+<div class="ahm-logo-slot ahm-fasie"><img src="assets/fasie.svg" alt="Фонд содействия инновациям" width="160" height="78"></div>
+<p>Проект реализован при поддержке Фонда содействия инновациям в рамках программы «Студенческий стартап» Платформы университетского технологического предпринимательства федерального проекта «Технологии», входящего в состав национального проекта «Эффективная и конкурентная экономика».</p>
+</div></div>
+<main id="ahm-home">
+<section class="ahm-hero ahm-wrap" id="ahm-about" aria-labelledby="ahm-title">
+<div class="ahm-art">
+<svg viewBox="0 0 520 350" fill="none" aria-hidden="true">
+<g stroke="#94d1dd" stroke-width=".8"><circle cx="210" cy="175" r="145"/><circle cx="210" cy="175" r="125"/><circle cx="325" cy="165" r="153"/><path d="M0 184h520M101 36v288M331 0v350" stroke-dasharray="8 5"/><path d="M28 208h474M331 6v320"/></g>
+<g stroke="#087c8c" stroke-width="1.6"><circle cx="179" cy="178" r="102"/><circle cx="179" cy="178" r="92"/><circle cx="179" cy="178" r="82"/><circle cx="179" cy="178" r="72"/><circle cx="179" cy="178" r="62"/></g>
+<path d="M203 145h231a39 39 0 0 1 0 78H203a39 39 0 0 1 0-78Z" fill="#f5fbfc" stroke="#087c8c" stroke-width="2"/>
+<g stroke="#78becb"><rect x="172" y="152" width="295" height="64" rx="32"/><rect x="181" y="159" width="277" height="50" rx="25"/><rect x="190" y="166" width="259" height="36" rx="18"/><rect x="198" y="174" width="243" height="20" rx="10"/></g>
+<path d="M164 184h331M164 193h331" stroke="#087c8c" stroke-width="1.5"/>
+</svg>
+<div class="ahm-art-caption">РАСЧЁТ · МОДЕЛИРОВАНИЕ · АНАЛИЗ</div>
+</div>
+<div><span class="ahm-eyebrow">О компании</span>
+<h1 id="ahm-title">Инженерные расчёты абсорбционных холодильных машин</h1>
+<p class="ahm-intro">Разрабатываем программное обеспечение для расчёта параметров АХМ и анализа режимов работы. Для проектировщиков, производителей оборудования и инженерных служб предприятий.</p>
+<div class="ahm-actions"><a class="ahm-button" href="#ahm-request">Обсудить вашу задачу</a><a class="ahm-textlink" href="#ahm-capabilities">Возможности программы ↓</a></div>
+</div>
+<a class="ahm-scroll-cue" href="#ahm-solution"><span>Подробнее о решении</span><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 3v20M6 15l8 8 8-8"/></svg></a>
+</section>
+<div class="ahm-product-band">
+<section class="ahm-product ahm-wrap" id="ahm-solution" aria-labelledby="ahm-solution-title">
+<div><h2 id="ahm-solution-title">От исходных данных —<br>к расчётным параметрам</h2>
+<p class="ahm-description">Единая среда для ввода данных, выполнения расчёта и анализа результатов.</p>
+<ol class="ahm-steps"><li>Задайте исходные данные</li><li>Выполните расчёт</li><li>Оцените результаты</li></ol></div>
+<figure class="ahm-shot ahm-shot-main">
+<div class="ahm-screen"><img src="assets/interface.jpeg" alt="Интерфейс расчёта АХМ: исходные данные и результаты" loading="lazy"></div>
+<figcaption><span class="ahm-shot-number">01</span><div><h3>Исходные данные и результаты</h3><p>Ввод параметров установки и таблица расчётных характеристик.</p></div></figcaption>
+</figure>
+<div class="ahm-gallery">
+<figure class="ahm-shot">
+<div class="ahm-screen"><img src="assets/cycle-points.jpeg" alt="Таблица параметров в десяти точках цикла" loading="lazy"></div>
+<figcaption><span class="ahm-shot-number">02</span><div><h3>Параметры в точках цикла</h3><p>Температура, давление, концентрация, энтальпия и расход рабочих потоков.</p></div></figcaption>
+</figure>
+<figure class="ahm-shot">
+<div class="ahm-screen"><img src="assets/crystallization.jpeg" alt="Карта кристаллизации с рабочими точками растворов" loading="lazy"></div>
+<figcaption><span class="ahm-shot-number">03</span><div><h3>Карта кристаллизации</h3><p>Рабочие точки слабого и крепкого растворов относительно линии кристаллизации.</p></div></figcaption>
+</figure>
+<figure class="ahm-shot"><div class="ahm-screen"><img src="assets/temperatures.jpeg" alt="График характерных температур цикла" loading="lazy"></div><figcaption><span class="ahm-shot-number">04</span><div><h3>Характерные температуры</h3><p>Наглядное сравнение расчётных температур в характерных точках цикла.</p></div></figcaption></figure>
+</div>
+</section></div>
+<section class="ahm-features ahm-wrap" id="ahm-capabilities" aria-labelledby="ahm-capabilities-title">
+<h2 id="ahm-capabilities-title">Задачи, с которыми мы работаем</h2>
+<div class="ahm-feature-grid">
+<article class="ahm-feature"><svg viewBox="0 0 40 44" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="3" width="28" height="36" rx="2"/><path d="M12 12h14M12 20h14M12 28h8"/></svg><div><h3>Расчёт параметров</h3><p>Температуры и расходы потоков, тепловые нагрузки, холодопроизводительность.</p></div></article>
+<article class="ahm-feature"><svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m18 3-1 5-5 2-4-2-5 8 4 3v6l-4 3 5 8 4-2 5 2 1 5h9l1-5 5-2 4 2 4-8-4-3v-6l4-3-4-8-4 2-5-2-1-5Z"/><circle cx="22" cy="22" r="7"/></svg><div><h3>Анализ режимов</h3><p>Повторный расчёт при изменении исходных условий.</p></div></article>
+<article class="ahm-feature"><svg viewBox="0 0 42 44" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 40V25h7v15ZM17 40V15h7v25ZM30 40V4h7v36Z"/></svg><div><h3>Оценка эффективности</h3><p>Потребная тепловая мощность и энергетические показатели.</p></div></article>
+</div></section>
+<div class="ahm-contact-band">
+<section class="ahm-contact ahm-wrap" id="ahm-request" aria-labelledby="ahm-request-title">
+<div class="ahm-contact-copy"><span class="ahm-eyebrow">Связаться с нами</span>
+<h2 id="ahm-request-title">Обсудим вашу<br>инженерную задачу</h2>
+<p>Расскажите об установке и необходимых расчётах. Обсудим применимость решения и следующий шаг.</p>
+<p class="ahm-note">Можно обратиться на стадии проработки проекта.</p>
+<div class="ahm-contact-slots"><h3>Контактные данные</h3>
+<!-- КОНТАКТЫ: замените ahm-blank на ссылки mailto: и tel: с реальными данными. -->
+<div class="ahm-contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2" y="5" width="20" height="15" rx="2"/><path d="m3 6 9 7 9-7"/></svg><span>Email</span><i class="ahm-blank" role="img" aria-label="Адрес будет добавлен"></i></div>
+<div class="ahm-contact-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 3 4 5-3 3a17 17 0 0 0 6 6l3-3 5 4c-1 4-4 5-8 3C7 18 3 14 2 8c0-3 1-5 4-5Z"/></svg><span>Телефон</span><i class="ahm-blank" role="img" aria-label="Номер будет добавлен"></i></div>
+</div></div>
+<div class="ahm-form-shell">
+<div class="ahm-form-slot" id="ahm-yandex-form">
+<!-- YANDEX_FORM_START -->
+<script src="https://forms.yandex.ru/_static/embed.js"></script>
+<iframe src="https://forms.yandex.ru/u/6ae0dd706d2d738a058d6279?iframe=1&amp;theme=light" frameborder="0" name="ya-form-6ae0dd706d2d738a058d6279" width="650" height="750" title="Форма обращения — опишите вашу инженерную задачу"></iframe>
+<!-- YANDEX_FORM_END -->
+</div></div>
+</section></div>
+</main>
+<footer class="ahm-footer ahm-wrap">
+<div class="ahm-brand"><svg class="ahm-mark" viewBox="0 0 48 52" aria-hidden="true"><path fill="#007e90" d="M24 1 44 13 43 38 24 51 4 39 4 15Z"/><path fill="#16536a" d="m24 1 5 30 14 7 1-25Z"/><path fill="#fff" d="m24 1-9 12-7 25 21-7 14 7-12-14ZM8 38l16 13 5-20Z"/></svg><span><strong>Холодмодель</strong><small>Инженерное программное обеспечение</small></span></div>
+<!-- После подготовки политики замените span на ссылку на опубликованный документ. -->
+<span class="ahm-footer-note">Политика конфиденциальности — скоро</span>
+</footer>
+
+<dialog class="ahm-lightbox" aria-labelledby="ahm-lightbox-title">
+<div class="ahm-lightbox-bar"><span class="ahm-lightbox-title" id="ahm-lightbox-title">Интерфейс программы</span><button type="button" class="ahm-lightbox-zoom" aria-pressed="false">Увеличить 2×</button><button type="button" class="ahm-lightbox-close" aria-label="Закрыть изображение" autofocus>×</button></div>
+<div class="ahm-lightbox-view"><img class="ahm-lightbox-image" alt=""></div>
+</dialog>
+</div>
+
+
+<script>
+(function(){
+  var root=document.getElementById('ahm-site');
+  if(!root||root.dataset.lightboxReady)return;
+  var dialog=root.querySelector('.ahm-lightbox');
+  if(!dialog||typeof dialog.showModal!=='function')return;
+  root.dataset.lightboxReady='true';
+  var view=dialog.querySelector('.ahm-lightbox-view'),image=dialog.querySelector('.ahm-lightbox-image');
+  var zoom=dialog.querySelector('.ahm-lightbox-zoom'),close=dialog.querySelector('.ahm-lightbox-close');
+  var previousFocus,oldOverflow,zoomed=false;
+  function resetZoom(){zoomed=false;view.classList.remove('is-zoomed');zoom.textContent='Увеличить 2×';zoom.setAttribute('aria-pressed','false');view.scrollTop=0;view.scrollLeft=0;}
+  function toggleZoom(){
+    if(!image.complete||!image.naturalWidth)return;
+    if(zoomed){resetZoom();return;}
+    var width=Math.max(image.naturalWidth,image.getBoundingClientRect().width*2);
+    image.style.setProperty('--ahm-image-width',Math.round(width)+'px');
+    zoomed=true;view.classList.add('is-zoomed');zoom.textContent='Вписать в окно';zoom.setAttribute('aria-pressed','true');
+  }
+  function prepare(){
+    root.querySelectorAll('.ahm-shot .ahm-screen').forEach(function(screen){
+      var img=screen.querySelector('img');
+      if(!img){screen.removeAttribute('role');screen.removeAttribute('tabindex');screen.removeAttribute('aria-label');screen.removeAttribute('aria-haspopup');return;}
+      screen.setAttribute('role','button');screen.tabIndex=0;
+      screen.setAttribute('aria-haspopup','dialog');
+      screen.setAttribute('aria-label','Увеличить: '+(img.alt||'скриншот программы'));
+    });
+  }
+  function open(screen){
+    var source=screen.querySelector('img');
+    if(!source)return;
+    var url=source.getAttribute('data-full')||source.currentSrc||source.src;
+    if(!url)return;
+    previousFocus=document.activeElement;resetZoom();
+    image.src=url;image.alt=source.alt||'Интерфейс программы';
+    var caption=screen.closest('figure').querySelector('h3');
+    dialog.querySelector('.ahm-lightbox-title').textContent=caption?caption.textContent:image.alt;
+    oldOverflow=document.documentElement.style.overflow;
+    dialog.showModal();document.documentElement.style.overflow='hidden';close.focus();
+  }
+  root.addEventListener('click',function(event){
+    var screen=event.target.closest('.ahm-shot .ahm-screen');
+    if(screen&&screen.querySelector('img')){event.preventDefault();open(screen);}
+  });
+  root.addEventListener('keydown',function(event){
+    var screen=event.target.closest('.ahm-shot .ahm-screen');
+    if(screen&&(event.key==='Enter'||event.key===' ')){event.preventDefault();open(screen);}
+  });
+  function dismiss(){dialog.close();restore();}
+  close.addEventListener('click',dismiss);
+  dialog.addEventListener('cancel',function(event){event.preventDefault();dismiss();});
+  zoom.addEventListener('click',toggleZoom);
+  image.addEventListener('click',toggleZoom);
+  dialog.addEventListener('click',function(event){
+    if(event.target===view){dismiss();return;}
+    if(event.target===dialog){var r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dismiss();}
+  });
+  function restore(){
+    document.documentElement.style.overflow=oldOverflow;
+    image.removeAttribute('src');resetZoom();
+    if(previousFocus&&previousFocus.isConnected)previousFocus.focus({preventScroll:true});
+  }
+  prepare();
+  new MutationObserver(prepare).observe(root.querySelector('#ahm-solution'),{childList:true,subtree:true});
+})();
+</script>
+
+<script>
+(function(){
+  var root=document.getElementById('ahm-site');
+  if(!root||root.dataset.revealReady||!('IntersectionObserver' in window))return;
+  root.dataset.revealReady='true';
+  var initialHeader=root.querySelector('.ahm-header').getBoundingClientRect().height;
+  root.style.setProperty('--ahm-header-height',initialHeader+'px');
+  root.style.setProperty('--ahm-top-height',(initialHeader+root.querySelector('.ahm-support').getBoundingClientRect().height)+'px');
+  var motion=window.matchMedia('(prefers-reduced-motion: reduce)');
+  if(motion.matches)return;
+  var targets=root.querySelectorAll('.ahm-product > div:first-child,.ahm-shot,.ahm-features > h2,.ahm-feature,.ahm-contact-copy,.ahm-form-shell');
+  // Короткие очереди внутри каждой группы, без накопления задержки по всей странице.
+  function stagger(selector,step,start){
+    root.querySelectorAll(selector).forEach(function(el,index){
+      el.style.setProperty('--ahm-reveal-delay',((start||0)+index*step)+'ms');
+    });
+  }
+  stagger('.ahm-shot-main',0,150);
+  stagger('.ahm-gallery .ahm-shot',150,0);
+  stagger('.ahm-feature',150,150);
+  stagger('.ahm-form-shell',0,150);
+  var observer;
+  function showAll(){
+    if(observer)observer.disconnect();
+    targets.forEach(function(el){el.classList.remove('ahm-reveal-pending','ahm-reveal-active');});
+  }
+  try{
+    observer=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.remove('ahm-reveal-pending');
+        }else if(!entry.target.contains(document.activeElement)){
+          entry.target.classList.add('ahm-reveal-pending');
+        }
+      });
+    },{threshold:0,rootMargin:'0px'});
+    targets.forEach(function(el){
+      var rect=el.getBoundingClientRect();
+      el.classList.add('ahm-reveal-active');
+      if(rect.bottom<=0||rect.top>=window.innerHeight)el.classList.add('ahm-reveal-pending');
+      observer.observe(el);
+    });
+    root.addEventListener('focusin',function(event){
+      targets.forEach(function(el){
+        if(el.contains(event.target)){el.classList.remove('ahm-reveal-pending');}
+      });
+    });
+    motion.addEventListener('change',function(event){if(event.matches)showAll();});
+    window.addEventListener('beforeprint',showAll);
+
+  }catch(error){showAll();}
+})();
+</script>
+
+<script>
+(function(){
+  var root=document.getElementById('ahm-site');
+  if(!root||root.dataset.smoothReady)return;
+  root.dataset.smoothReady='true';
+  root.addEventListener('click',function(event){
+    var link=event.target.closest('a[href^="#"]');
+    if(!link||!root.contains(link)||event.defaultPrevented||event.button!==0||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
+    var hash=link.getAttribute('href');
+    var target=document.getElementById(hash.slice(1));
+    if(!target||!root.contains(target))return;
+    event.preventDefault();
+    try{if(window.location.hash!==hash)window.history.pushState(null,'',hash);}catch(error){}
+    target.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var root=document.getElementById('ahm-site');
+  if(!root)return;
+  var header=root.querySelector('.ahm-header'),support=root.querySelector('.ahm-support');
+  function measure(){
+    var headerHeight=header.getBoundingClientRect().height;
+    root.style.setProperty('--ahm-header-height',headerHeight+'px');
+    var height=headerHeight+support.getBoundingClientRect().height;
+    root.style.setProperty('--ahm-top-height',height+'px');
+  }
+  var cue=root.querySelector('.ahm-scroll-cue');
+  var hero=root.querySelector('.ahm-hero');
+  function updateCue(){
+    var start=hero.getBoundingClientRect().top+window.scrollY-support.getBoundingClientRect().height-header.getBoundingClientRect().height;
+    cue.classList.toggle('is-hidden',window.scrollY>Math.max(0,start)+60);
+  }
+  window.addEventListener('scroll',updateCue,{passive:true});
+  window.addEventListener('resize',updateCue);
+  measure();updateCue();
+  if('ResizeObserver' in window){var observer=new ResizeObserver(measure);observer.observe(header);observer.observe(support);}
+  else window.addEventListener('resize',measure);
+})();
+</script>
+
+<script>
+(function(){
+  var root=document.getElementById('ahm-site');
+  if(!root||root.dataset.spyReady)return;
+  root.dataset.spyReady='true';
+  var header=root.querySelector('.ahm-header');
+  var items=Array.from(root.querySelectorAll('.ahm-nav a[href^="#"]')).map(function(link){
+    return {link:link,section:document.getElementById(link.getAttribute('href').slice(1))};
+  }).filter(function(item){return item.section;});
+  // Порядок разделов на странице отличается от порядка ссылок в меню.
+  items.sort(function(a,b){return a.section.compareDocumentPosition(b.section)&Node.DOCUMENT_POSITION_FOLLOWING?-1:1;});
+  var pending=false;
+  function update(){
+    pending=false;
+    var line=header.getBoundingClientRect().bottom+Math.min(120,window.innerHeight*.18);
+    var active=items[0];
+    items.forEach(function(item){if(item.section.getBoundingClientRect().top<=line)active=item;});
+    // У короткого последнего раздела может не быть места, чтобы дойти до контрольной линии.
+    var last=items[items.length-1];
+    if(last&&window.scrollY+window.innerHeight>=document.documentElement.scrollHeight-3&&last.section.getBoundingClientRect().top<window.innerHeight)active=last;
+    items.forEach(function(item){
+      if(item===active)item.link.setAttribute('aria-current','location');
+      else item.link.removeAttribute('aria-current');
+    });
+  }
+  function schedule(){if(!pending){pending=true;window.requestAnimationFrame(update);}}
+  window.addEventListener('scroll',schedule,{passive:true});
+  window.addEventListener('resize',schedule);
+  window.addEventListener('hashchange',schedule);
+  window.addEventListener('pageshow',schedule);
+  if('ResizeObserver' in window)new ResizeObserver(schedule).observe(root);
+  update();
+})();
+</script>
+</body></html>
